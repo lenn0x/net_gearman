@@ -24,6 +24,12 @@
         <email>cg@chrisgoffinet.com</email>
         <active>yes</active>
     </lead>
+    <developer>
+        <name>Brian Moon</name>
+        <user>brianlmoon</user>
+        <email>brian@moonspot.net</email>
+        <active>yes</active>
+    </developer>
     <date>2008-03-12</date>
     <version>
         <release>0.2.2</release>
@@ -36,6 +42,7 @@
     <license uri="http://www.opensource.org/licenses/bsd-license.php">New BSD License</license>
     <notes><![CDATA[
         * Upped socket_select() timeout to 60 seconds (as it is in the Perl client).
+        * Added Brian Moon as a developer.
     ]]></notes>
     <contents>
         <dir name="/">
