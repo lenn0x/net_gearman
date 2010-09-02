@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Interface for Danga's Gearman job scheduling system
  *
@@ -455,5 +454,3 @@ class Net_Gearman_Worker
         return false;
     }
 }
-
-?>
