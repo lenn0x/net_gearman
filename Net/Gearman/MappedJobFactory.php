@@ -33,8 +33,8 @@ require_once 'Net/Gearman/Exception.php';
  * @author    Ray Rehbein <mrrehbein@gmail.com>
  * @copyright 2011 Deal Express LLC
  * @license   http://www.opensource.org/licenses/bsd-license.php New BSD License
- * @link      http://www.danga.com/gearman/
  * @version   Release: @package_version@
+ * @link      http://www.danga.com/gearman/
  * @see       Net_Gearman_Job_Common, Net_Gearman_Worker
  */
 class Net_Gearman_MappedJobFactory
@@ -61,7 +61,8 @@ class Net_Gearman_MappedJobFactory
     /**
      * Copy an associative array of job => class into the mapped factory
      *
-     * @param array $jobMap
+     * @param array $jobMap map of job to classes
+     *
      * @return void
      */
     public function mapJobClasses($jobMap)
@@ -74,8 +75,9 @@ class Net_Gearman_MappedJobFactory
     /**
      * Map a job/function to a class name.
      *
-     * @param string $job
-     * @param string $class
+     * @param string $job   gearman function name
+     * @param string $class class to use for handling the job
+     *
      * @return void
      */
     public function mapJobClass($job, $class)
@@ -86,7 +88,8 @@ class Net_Gearman_MappedJobFactory
     /**
      * Get class name that a job is mapped to
      *
-     * @param string $job
+     * @param string $job gearman function name
+     *
      * @return string
      */
     public function getJobClassName($job)
@@ -101,8 +104,10 @@ class Net_Gearman_MappedJobFactory
     /**
      * Copy map of jobs into worker as abilities for the worker
      *
-     * @param Net_Gearman_Worker $worker
-     * @param array              $initParams Parameters for job constructor as per $worker->addAbility
+     * @param Net_Gearman_Worker $worker     Worker object to add abilities to
+     * @param array              $initParams Parameters for job constructor
+     *                                       as per $worker->addAbility
+     *
      * @return void
      */
     public function mapToWorker(Net_Gearman_Worker $worker, $initParams = array())
@@ -120,9 +125,9 @@ class Net_Gearman_MappedJobFactory
      * which made the request for the job so that the job can communicate its
      * status from there on out.
      *
-     * @param string $job    Name of job (func in Gearman terms)
-     * @param object $conn   Instance of Net_Gearman_Connection
-     * @param string $handle Gearman job handle of job
+     * @param string $job        Name of job (func in Gearman terms)
+     * @param object $conn       Instance of Net_Gearman_Connection
+     * @param string $handle     Gearman job handle of job
      * @param array  $initParams initialisation parameters for job
      *
      * @return object Instance of Net_Gearman_Job_Common child
