@@ -91,7 +91,14 @@ class Net_Gearman_Worker
      * @var array $initParams
      */
     protected $initParams = array();
-    
+
+    /**
+     * Job Factory
+     *
+     * @var callback
+     */
+    protected $jobFactory = array('Net_Gearman_Job', 'factory');
+
     /**
      * Callbacks registered for this worker
      *
@@ -170,6 +177,29 @@ class Net_Gearman_Worker
                 "Couldn't connect to any available servers"
             );
         }
+    }
+
+    /**
+     * Set Job Factory
+     *
+     * Callback method
+     *   callback ( $name, $socket, $handle, $initParams = array() )
+     *
+     *   param $name - function name
+     *   param $socket - server connection
+     *   param $handle - job handle
+     *   param $initParams - Parameters for job constructor as per addAbility
+     *
+     * @param callable
+     * @return void
+     * @throws
+     */
+    public function setJobFactory($callable)
+    {
+        if (!is_callable($callable)) {
+            throw new InvalidArgumentException('Callback is not callable');
+        }
+        $this->jobFactory = $callable;
     }
 
     /**
