@@ -40,6 +40,13 @@ require_once 'Net/Gearman/Exception.php';
 class Net_Gearman_MappedJobFactory
 {
     /**
+     * Map of function to class name
+     *
+     * @var array
+     */
+    protected $map = array();
+
+    /**
      * Constructor
      *
      * @param array $jobMap inital map of job to classes

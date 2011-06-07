@@ -363,8 +363,8 @@ class Net_Gearman_Worker
             }
         }
 
-        $job = Net_Gearman_Job::factory(
-            $name, $socket, $handle, $this->initParams[$name]
+        $job = call_user_func(
+            $this->jobFactory, $name, $socket, $handle, $this->initParams[$name]
         );
         try {
             $this->start($handle, $name, $arg);
