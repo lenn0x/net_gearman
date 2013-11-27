@@ -144,8 +144,11 @@ class Net_Gearman_Manager
                 continue;
             }
 
-            list($info, $abilities) = explode(" : ", $t);
-            list($fd, $ip, $id)     = explode(' ', $info);
+            $t = explode(" : ", $t);
+            $info = $t[0];
+            $abilities = isset($t[1]) ? $t[1] : null;
+            
+            list($fd, $ip, $id) = explode(' ', $info);
 
             $abilities = trim($abilities);
 
