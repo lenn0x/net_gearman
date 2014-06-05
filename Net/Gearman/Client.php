@@ -111,10 +111,11 @@ class Net_Gearman_Client
     }
 
     /**
-     * Fire off a background task with the given arguments
+     * Fire off a task with the given arguments
      *
      * @param string $func Name of job to run
-     * @param array  $args First key should be args to send 
+     * @param array  $args First key should be args to send
+     *                     Second key should be task type (1 for normal, 2 for background)
      *
      * @return void
      * @see Net_Gearman_Task, Net_Gearman_Set
@@ -126,12 +127,21 @@ class Net_Gearman_Client
             $send = $args[0];
         }
 
+        $type = Net_Gearman_Task::JOB_BACKGROUND;
+        if (isset($args[1]) && !empty($args[1])) {
+            $type = $args[1];
+        }
+
         $task       = new Net_Gearman_Task($func, $send);
-        $task->type = Net_Gearman_Task::JOB_BACKGROUND;
+        $task->type = $type;
 
         $set = new Net_Gearman_Set();
         $set->addTask($task);
         $this->runSet($set);
+        
+        if ($type != Net_Gearman_Task::JOB_BACKGROUND) {
+            return $task->result['result'];
+        }
         return $task->handle;
     }
 
