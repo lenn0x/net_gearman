@@ -96,7 +96,7 @@ class Net_Gearman_Connection
      * the job_created command.
      *
      * @access      public
-     * @var         array           $waiting
+     * @var         array $waiting
      * @static
      */
     static public $waiting = array();
@@ -124,8 +124,8 @@ class Net_Gearman_Connection
      * Opens the socket to the Gearman Job server. It throws an exception if
      * a socket error occurs. Also populates Net_Gearman_Connection::$magic.
      *
-     * @param string $host    e.g. 127.0.0.1 or 127.0.0.1:7003
-     * @param int    $timeout Timeout in milliseconds
+     * @param string $host e.g. 127.0.0.1 or 127.0.0.1:7003
+     * @param int $timeout Timeout in milliseconds
      *
      * @return resource A connection to a Gearman server
      * @throws Net_Gearman_Exception when it can't connect to server
@@ -141,15 +141,14 @@ class Net_Gearman_Connection
             }
         }
 
-        $err   = '';
-        $errno = 0;
-        $port  = 4730;
+        $port = 4730;
 
         if (strpos($host, ':')) {
             list($host, $port) = explode(':', $host);
         }
 
         $start = microtime(true);
+        $timeLeft = ((microtime(true) - $start) * 1000);
         do {
             $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
             $socket_connected = @socket_connect($socket, $host, $port);
@@ -162,7 +161,7 @@ class Net_Gearman_Connection
 
         if (!$socket_connected) {
             $errno = socket_last_error($socket);
-            $errstr	= socket_strerror($errno);
+            $errstr = socket_strerror($errno);
             throw new Net_Gearman_Exception(
                 "Can't connect to server ($errno: $errstr)"
             );
@@ -180,9 +179,9 @@ class Net_Gearman_Connection
      * parameters (in key value pairings) and packs it all up to send across
      * the socket.
      *
-     * @param resource $socket  The socket to send the command to
-     * @param string   $command Command to send (e.g. 'can_do')
-     * @param array    $params  Params to send
+     * @param resource $socket The socket to send the command to
+     * @param string $command Command to send (e.g. 'can_do')
+     * @param array $params Params to send
      *
      * @see Net_Gearman_Connection::$commands, Net_Gearman_Connection::$socket
      * @return boolean
@@ -204,26 +203,25 @@ class Net_Gearman_Connection
         $d = implode("\x00", $data);
 
         $cmd = "\0REQ" . pack("NN",
-                              self::$commands[$command][0],
-                              self::stringLength($d)) . $d;
+                self::$commands[$command][0],
+                self::stringLength($d)) . $d;
 
         $cmdLength = self::stringLength($cmd);
         $written = 0;
         $error = false;
         do {
             $check = @socket_write($socket,
-                                   self::subString($cmd, $written, $cmdLength),
-                                   $cmdLength);
+                self::subString($cmd, $written, $cmdLength),
+                $cmdLength);
 
             if ($check === false) {
                 if (socket_last_error($socket) == SOCKET_EAGAIN or
                     socket_last_error($socket) == SOCKET_EWOULDBLOCK or
-                    socket_last_error($socket) == SOCKET_EINPROGRESS)
-                {
+                    socket_last_error($socket) == SOCKET_EINPROGRESS
+                ) {
                     // skip this is okay
                 }
-                else
-                {
+                else {
                     $error = true;
                     break;
                 }
@@ -234,7 +232,7 @@ class Net_Gearman_Connection
 
         if ($error === true) {
             $errno = socket_last_error($socket);
-            $errstr	= socket_strerror($errno);
+            $errstr = socket_strerror($errno);
             throw new Net_Gearman_Exception(
                 "Could not write command to socket ($errno: $errstr)"
             );
@@ -257,7 +255,7 @@ class Net_Gearman_Connection
             $buf = socket_read($socket, 12 - self::stringLength($header));
             $header .= $buf;
         } while ($buf !== false &&
-                 $buf !== '' && self::stringLength($header) < 12);
+            $buf !== '' && self::stringLength($header) < 12);
 
         if ($buf === '') {
             throw new Net_Gearman_Exception("Connection was reset");
@@ -303,8 +301,8 @@ class Net_Gearman_Connection
         }
 
         return array('function' => self::$magic[$resp['type']][0],
-                     'type' => $resp['type'],
-                     'data' => $return);
+            'type' => $resp['type'],
+            'data' => $return);
     }
 
     /**
@@ -320,7 +318,7 @@ class Net_Gearman_Connection
     {
         static $cmds = array();
 
-        $tv_sec  = floor(($timeout % 1000));
+        $tv_sec = floor(($timeout % 1000));
         $tv_usec = ($timeout * 1000);
 
         $start = microtime(true);
@@ -329,9 +327,9 @@ class Net_Gearman_Connection
                 throw new Net_Gearman_Exception('Blocking read timed out');
             }
 
-            $write  = null;
+            $write = null;
             $except = null;
-            $read   = array($socket);
+            $read = array($socket);
 
             socket_select($read, $write, $except, $tv_sec, $tv_usec);
             foreach ($read as $s) {
@@ -366,8 +364,8 @@ class Net_Gearman_Connection
     static public function isConnected($conn)
     {
         return (is_null($conn) !== true &&
-                is_resource($conn) === true &&
-                strtolower(get_resource_type($conn)) == 'socket');
+            is_resource($conn) === true &&
+            strtolower(get_resource_type($conn)) == 'socket');
     }
 
     /**
@@ -386,7 +384,8 @@ class Net_Gearman_Connection
 
         if (self::$multiByteSupport & 2) {
             return mb_strlen($value, '8bit');
-        } else {
+        }
+        else {
             return strlen($value);
         }
     }
@@ -394,8 +393,8 @@ class Net_Gearman_Connection
     /**
      * Multibyte substr() implementation
      *
-     * @param string  $str    The string to substr()
-     * @param integer $start  The first position used
+     * @param string $str The string to substr()
+     * @param integer $start The first position used
      * @param integer $length The maximum length of the returned string
      *
      * @return string Portion of $str specified by $start and $length
@@ -411,7 +410,8 @@ class Net_Gearman_Connection
 
         if (self::$multiByteSupport & 2) {
             return mb_substr($str, $start, $length, '8bit');
-        } else {
+        }
+        else {
             return substr($str, $start, $length);
         }
     }
