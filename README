@@ -57,3 +57,32 @@ $worker->addAbility('someBackgroundJob');
 $worker->beginWork();
 
 ?>
+
+
+Example of a Normal Job (where response is given)
+
+Client
+<?php
+require_once 'Net/Gearman/Client.php';
+$client = new Net_Gearman_Client('localhost:4730');
+echo $client->stringReverse('Hello World!', Net_Gearman_Task::JOB_NORMAL)
+?>
+
+Worker
+<?php
+require_once 'Net/Gearman/Worker.php';
+$worker = new Net_Gearman_Worker('localhost:4730');
+$worker->addAbility('stringReverse');
+$worker->beginWork();
+?>
+
+Job
+<?php
+class Net_Gearman_Job_stringReverse extends Net_Gearman_Job_Common
+{
+    public function run($args)
+    {
+        return strrev($args);
+    }
+}
+?>
