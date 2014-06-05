@@ -52,19 +52,19 @@ abstract class Net_Gearman_Job
     /**
      * Create an instance of a job
      *
-     * The Net_Geraman_Worker class creates connections to multiple job servers
+     * The Net_Gearman_Worker class creates connections to multiple job servers
      * and then fires off jobs using this function. It hands off the connection
      * which made the request for the job so that the job can communicate its
      * status from there on out.
      *
-     * @param string $job    Name of job (func in Gearman terms)
-     * @param object $conn   Instance of Net_Gearman_Connection
+     * @param string $job Name of job (func in Gearman terms)
+     * @param Net_Gearman_Connection $conn Instance of Net_Gearman_Connection
      * @param string $handle Gearman job handle of job
-     * @param string $initParams initialisation parameters for job
-     * 
+     * @param array|string $initParams initialisation parameters for job
+     *
+     * @throws Net_Gearman_Job_Exception
      * @return object Instance of Net_Gearman_Job_Common child
      * @see Net_Gearman_Job_Common
-     * @throws Net_Gearman_Exception
      */
     static public function factory($job, $conn, $handle, $initParams=array())
     {

@@ -101,7 +101,7 @@ class Net_Gearman_Set implements IteratorAggregate, Countable
      *
      * @param array $tasks Array of tasks to run
      *
-     * @return void
+     * @return Net_Gearman_Set
      * @see Net_Gearman_Task
      */
     public function __construct(array $tasks = array())
@@ -114,7 +114,7 @@ class Net_Gearman_Set implements IteratorAggregate, Countable
     /**
      * Add a task to the set
      *
-     * @param object $task Task to add to the set
+     * @param Net_Gearman_Task $task Task to add to the set
      *
      * @return void
      * @see Net_Gearman_Task, Net_Gearman_Set::$tasks

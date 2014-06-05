@@ -129,10 +129,10 @@ class Net_Gearman_Worker
      * Constructor
      *
      * @param array $servers List of servers to connect to
-     * @param string $id     Optional unique id for this worker
-     * 
-     * @return void
+     * @param string $id Optional unique id for this worker
+     *
      * @throws Net_Gearman_Exception
+     * @return Net_Gearman_Worker
      * @see Net_Gearman_Connection
      */
     public function __construct($servers = null, $id = "")
@@ -175,7 +175,7 @@ class Net_Gearman_Worker
     /**
      * Announce an ability to the job server
      *
-     * @param string  $ability Name of functcion/ability
+     * @param string  $ability Name of function/ability
      * @param integer $timeout How long to give this job
      * @param array $initParams Parameters for job constructor
      *
@@ -421,9 +421,9 @@ class Net_Gearman_Worker
      * Run the fail callbacks
      *
      * @param string $handle The job's Gearman handle
-     * @param string $job    The name of the job
-     * @param object $error  The exception thrown
-     * 
+     * @param string $job The name of the job
+     * @param PEAR_Exception $error The exception thrown
+     *
      * @return void
      */
     protected function fail($handle, $job, PEAR_Exception $error)

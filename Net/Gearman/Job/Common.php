@@ -60,11 +60,11 @@ abstract class Net_Gearman_Job_Common
     /**
      * Constructor
      *
-     * @param resource $conn   Connection to communicate with
-     * @param string   $handle Job ID / handle for this job
+     * @param resource $conn Connection to communicate with
+     * @param string $handle Job ID / handle for this job
      * @param array $initParams initialization parameters
-     * 
-     * @return void
+     *
+     * @return Net_Gearman_Job_Common
      */
     public function __construct($conn, $handle, array $initParams=array())
     {

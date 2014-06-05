@@ -65,11 +65,11 @@ class Net_Gearman_Client
     /**
      * Constructor
      *
-     * @param array   $servers An array of servers or a single server
+     * @param array $servers An array of servers or a single server
      * @param integer $timeout Timeout in microseconds
-     * 
-     * @return void
+     *
      * @throws Net_Gearman_Exception
+     * @return Net_Gearman_Client
      * @see Net_Gearman_Connection
      */
     public function __construct($servers = null, $timeout = 1000)
@@ -117,7 +117,7 @@ class Net_Gearman_Client
      * @param array  $args First key should be args to send
      *                     Second key should be task type (1 for normal, 2 for background)
      *
-     * @return void
+     * @return mixed
      * @see Net_Gearman_Task, Net_Gearman_Set
      */
     public function __call($func, array $args = array())
@@ -148,8 +148,8 @@ class Net_Gearman_Client
     /**
      * Submit a task to Gearman
      *
-     * @param object $task Task to submit to Gearman
-     * 
+     * @param Net_Gearman_Task|object $task Task to submit to Gearman
+     *
      * @return      void
      * @see         Net_Gearman_Task, Net_Gearman_Client::runSet()
      */
@@ -203,9 +203,9 @@ class Net_Gearman_Client
     /**
      * Run a set of tasks
      *
-     * @param object $set A set of tasks to run
-     * @param int    $timeout Time in seconds for the socket timeout. Max is 10 seconds
-     * 
+     * @param Net_Gearman_Set|object $set A set of tasks to run
+     * @param int $timeout Time in seconds for the socket timeout. Max is 10 seconds
+     *
      * @return void
      * @see Net_Gearman_Set, Net_Gearman_Task
      */
@@ -269,14 +269,14 @@ class Net_Gearman_Client
     }
 
     /**
-     * Handle the response read in 
+     * Handle the response read in
      *
-     * @param array    $resp  The raw array response
-     * @param resource $s     The socket 
-     * @param object   $tasks The tasks being ran
-     * 
-     * @return void
+     * @param array $resp The raw array response
+     * @param resource $s The socket
+     * @param Net_Gearman_Set $tasks The tasks being ran
+     *
      * @throws Net_Gearman_Exception
+     * @return void
      */
     protected function handleResponse($resp, $s, Net_Gearman_Set $tasks) 
     {

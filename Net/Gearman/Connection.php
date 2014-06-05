@@ -40,7 +40,7 @@ class Net_Gearman_Connection
      * A list of valid Gearman commands
      *
      * This is a list of valid Gearman commands (the key of the array), their
-     * integery type (first key in second array) used in the binary header, and
+     * integer type (first key in second array) used in the binary header, and
      * the arguments / order of arguments to send/receive.
      *
      * @var array $commands
@@ -111,7 +111,7 @@ class Net_Gearman_Connection
     /**
      * Constructor
      *
-     * @return void
+     * @return Net_Gearman_Connection
      */
     final private function __construct()
     {
@@ -310,10 +310,10 @@ class Net_Gearman_Connection
     /**
      * Blocking socket read
      *
-     * @param resource $socket  The socket to read from
-     * @param float    $timeout The timeout for the read
+     * @param resource $socket The socket to read from
+     * @param float|int $timeout The timeout for the read
      *
-     * @throws Net_Gearman_Exception on timeouts
+     * @throws Net_Gearman_Exception
      * @return array
      */
     static public function blockingRead($socket, $timeout = 500)
