@@ -8,7 +8,7 @@ Net_Gearman is currently in production at Yahoo! and Digg doing all sorts of off
 Installation
 
    1. Install PEAR if it is not already installed on your system.
-   2. Run pear install http://netgearman.googlecode.com/files/Net_Gearman-x.y.z.tgz (Replace x.y.z with the latest version from the featured download to the right). 
+   2. Run pear install https://github.com/lenn0x/net_gearman/archive/x.y.z.tag.gz (Replace x.y.z with the latest version from the releases). 
 
 Examples
 Client
